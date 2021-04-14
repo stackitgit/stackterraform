@@ -15,6 +15,7 @@ sudo chown -R ec2-user:apache /var/www
 sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \;
 find /var/www -type f -exec sudo chmod 0664 {} \;
 cd /var/www/html
+mkdir -p /etc/tls
 
 #Install wordpress and unzip it/copy the sample php conf to wp-config
 
@@ -73,6 +74,6 @@ UPDATE wp_options SET option_value = "http://`curl http://169.254.169.254/latest
 commit;
 EOF
 EOP
-## new change
+
 sudo chmod 755 /tmp/postinstall.sh
 sudo /tmp/postinstall.sh
