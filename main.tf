@@ -29,7 +29,7 @@ resource "aws_instance" "App_Server" {
 }
 }
 
-
+/*
 # ---------------------------------------------------------------------------------------------------------------------
 #  CREATE A CA CERTIFICATE
 # ---------------------------------------------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ resource "tls_locally_signed_cert" "cert" {
     command = "echo '${tls_locally_signed_cert.cert.cert_pem}' > '${var.public_key_file_path}' && chmod ${var.permissions} '${var.public_key_file_path}' && chown ${var.owner} '${var.public_key_file_path}'"
   }
 }
-
+*/
 
 output "ip" {
   value = "${aws_instance.App_Server.public_ip}"
