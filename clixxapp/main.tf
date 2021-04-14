@@ -1,4 +1,4 @@
-terraform{
+/*terraform{
          backend "s3"{
                 bucket= "stackbuckstatemike"
                 key = "terraform.tfsate"
@@ -6,7 +6,7 @@ terraform{
                      dynamodb_table="statelock-tf"
                  }
  }
-
+*/
 
 resource "aws_key_pair" "mykeypair" {
   key_name   = "clixxapp/mykeypair"
