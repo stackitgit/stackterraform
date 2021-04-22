@@ -30,81 +30,57 @@ resource "aws_instance" "App_Server" {
 }
 
 /*
-# ---------------------------------------------------------------------------------------------------------------------
-#  CREATE A CA CERTIFICATE
-# ---------------------------------------------------------------------------------------------------------------------
-
-resource "tls_private_key" "ca" {
-  algorithm   = "${var.private_key_algorithm}"
-  ecdsa_curve = "${var.private_key_ecdsa_curve}"
-  rsa_bits    = "${var.private_key_rsa_bits}"
-}
-
-resource "tls_self_signed_cert" "ca" {
-  #for_each=var.ca_allowed_uses
-  key_algorithm     = "${tls_private_key.ca.algorithm}"
-  private_key_pem   = "${tls_private_key.ca.private_key_pem}"
-  is_ca_certificate = true
-
-  validity_period_hours = "${var.validity_period_hours}"
-  allowed_uses          = ["${var.ca_allowed_uses[0]}"]
-  
-
-  subject {
-    common_name  = "${var.ca_common_name}"
-    organization = "${var.organization_name}"
-  }
-
-  # Store the CA public key in a file.
-  provisioner "local-exec" {
-    command = "echo '${tls_self_signed_cert.ca.cert_pem}' > '${var.ca_public_key_file_path}' && chmod ${var.permissions} '${var.ca_public_key_file_path}' && chown ${var.owner} '${var.ca_public_key_file_path}'"
+resource "aws_acm_certificate" "cert" {
+  domain_name       = "stack-cloud.com"
+  validation_method = "DNS"
+  tags = { Name= "stack-cert"}
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
-# ---------------------------------------------------------------------------------------------------------------------
-# CREATE A TLS CERTIFICATE SIGNED USING THE CA CERTIFICATE
-# ---------------------------------------------------------------------------------------------------------------------
+resource "aws_alb" "stack-alb" {
+  name            = "stack-alb"
+  internal        = true
+  security_groups = [aws_security_group.WebDMZ.id]
+  tags = { Name= "stack-alb"}
+}
 
-resource "tls_private_key" "cert" {
-  algorithm   = "${var.private_key_algorithm}"
-  ecdsa_curve = "${var.private_key_ecdsa_curve}"
-  rsa_bits    = "${var.private_key_rsa_bits}"
 
-  # Store the certificate's private key in a file.
-  provisioner "local-exec" {
-    command = "echo '${tls_private_key.cert.private_key_pem}' > '${var.private_key_file_path}' && chmod ${var.permissions} '${var.private_key_file_path}' && chown ${var.owner} '${var.private_key_file_path}'"
+resource "aws_alb_target_group" "stack_alb_target_group" {
+  name_prefix = "Stack"
+  port        = 443
+  protocol    = "HTTPS"
+  stickiness {
+    type = "lb_cookie"
+  }
+  health_check {
+    path                = "/user/login"
+    matcher             = "200"
+    protocol            = "HTTPS"
+    interval            = 30
+    healthy_threshold   = 2
+    unhealthy_threshold = 5
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
+  tags = { Name= "stack-alb-tg"}
+}
+
+resource "aws_alb_listener" "stack_alb_secure_listener" {
+  load_balancer_arn = aws_alb.stack-alb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
+  certificate_arn   = aws_acm_certificate.cert.arn
+  default_action {
+    target_group_arn = aws_alb_target_group.stack_alb_target_group.arn
+    type             = "forward"
   }
 }
 
-resource "tls_cert_request" "cert" {
-  key_algorithm   = "${tls_private_key.cert.algorithm}"
-  private_key_pem = "${tls_private_key.cert.private_key_pem}"
 
-  dns_names    = ["${var.dns_names[0]}"]
-  ip_addresses = ["${var.ip_addresses[0]}"]
-
-  subject {
-    common_name  = "${var.common_name}"
-    organization = "${var.organization_name}"
-  }
-}
-
-resource "tls_locally_signed_cert" "cert" {
-  cert_request_pem = "${tls_cert_request.cert.cert_request_pem}"
-
-  ca_key_algorithm   = "${tls_private_key.ca.algorithm}"
-  ca_private_key_pem = "${tls_private_key.ca.private_key_pem}"
-  ca_cert_pem        = "${tls_self_signed_cert.ca.cert_pem}"
-
-  validity_period_hours = "${var.validity_period_hours}"
-  allowed_uses          = ["${var.allowed_uses[0]}"]
-   #allowed_uses = [each.key]
-
-  # Store the certificate's public key in a file.
-  provisioner "local-exec" {
-    command = "echo '${tls_locally_signed_cert.cert.cert_pem}' > '${var.public_key_file_path}' && chmod ${var.permissions} '${var.public_key_file_path}' && chown ${var.owner} '${var.public_key_file_path}'"
-  }
-}
 */
 
 output "ip" {
