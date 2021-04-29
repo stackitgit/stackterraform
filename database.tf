@@ -45,7 +45,8 @@ resource "aws_db_instance" "wordpressdbclixxrestore" {
   instance_class      = "db.t2.micro"
   snapshot_identifier = var.PROD_DB_SNAPSHOT
   identifier="wordpressdbclixx"
-  username= "wordpressuser"
+  #username= "wordpressuser"
+  username=var.DB_USER
   password= var.RDS_PASSWORD
   skip_final_snapshot = true
   vpc_security_group_ids=[aws_security_group.WebDMZ.id]
