@@ -1,7 +1,8 @@
 terraform{
          backend "s3"{
                 bucket= "stackbuckstatemike"
-                key = "terraform.tfsate"
+                //bucket= "stackstatebuck2"
+                key = "terraform.tfstate"
                     region="us-east-1"
                      dynamodb_table="statelock-tf"
                  }
