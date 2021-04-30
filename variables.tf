@@ -25,6 +25,9 @@ variable "AMIS" {
   }
 }
 
+variable "instance_type"{
+  default ="t2.micro"
+}
  variable "RDS_PASSWORD" {
  }
 
@@ -41,4 +44,11 @@ variable "DB_PASSWORD" {
 variable "DB_HOST" {
 }
 variable "DB_NAME" {
+}
+
+variable "min_size" {
+  default=1
+}
+variable "max_size" {
+  default=4
 }
