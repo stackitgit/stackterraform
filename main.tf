@@ -41,7 +41,7 @@ resource "aws_alb" "stack-alb" {
   name            = "${local.prefix}${local.version}-alb"
   internal        = true
   security_groups = [aws_security_group.WebDMZ.id]
-  subnets            = aws_subnet.public.*.id
+  subnets            = [subnet-98c5bbfd , subnet-b54ee0ed]
   tags = { Name= "stack-alb"}
 }
 
