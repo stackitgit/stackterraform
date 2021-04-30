@@ -88,7 +88,7 @@ resource "aws_launch_configuration" "launch_config" {
   name_prefix = "${local.prefix}_${local.version}-"
 
   image_id = var.AMIS[var.AWS_REGION]
-  instance_type        = var.instance_type
+  instance_type = var.instance_type
   iam_instance_profile   = "${aws_iam_instance_profile.stack_profile.name}"
   key_name = aws_key_pair.mykeypair.key_name
   associate_public_ip_address = true
