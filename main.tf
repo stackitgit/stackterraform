@@ -244,7 +244,7 @@ resource "aws_acm_certificate" "cert" {
 output "ip" {
   value = "${aws_instance.App_Server.public_ip}"
 }
-*/
+
 output "ip" {
   value = "${aws_autoscaling_group.clixx_asg.public_ips}"
-}
+}*/
