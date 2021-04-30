@@ -121,7 +121,7 @@ resource "aws_autoscaling_group" "clixx_asg" {
   wait_for_elb_capacity     = var.min_size
   wait_for_capacity_timeout = "30m"
   health_check_grace_period = 720
-  health_check_type         = "CLIXX"
+  health_check_type         = "ELB"
   default_cooldown          = 30
 
   //vpc_zone_identifier = module.core_info.private_subnets
