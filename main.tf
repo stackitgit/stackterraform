@@ -1,4 +1,4 @@
-/*terraform{
+terraform{
          backend "s3"{
                 bucket= "stackbuckstatemike"
                 //bucket= "stackstatebuck2"
@@ -6,7 +6,7 @@
                     region="us-east-1"
                      dynamodb_table="statelock-tf"
                  }
- }*/
+ }
 
 
 resource "aws_key_pair" "mykeypair" {
