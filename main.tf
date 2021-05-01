@@ -74,7 +74,7 @@ resource "aws_default_vpc" "default" {
 }
 
 resource "aws_route53_zone" "primary" {
-  name = "www.stack-cloud.com"
+  name = "stack-cloud.com"
 }
 
 resource "aws_default_subnet" "default_az1" {
