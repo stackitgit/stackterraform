@@ -33,15 +33,68 @@ resource "aws_instance" "App_Server" {
    Environment = "production"
 }
 }
+
+//Create VPC
+resource "aws_vpc" "clixx_vpc" {
+  cidr_block       = var.vpc_cidr
+  tags = {
+    Name = "clixxVPC"
+  }
+}
+
+# Subnets : public
+resource "aws_subnet" "public" {
+  count = length(var.subnets_cidr)
+  vpc_id = aws_vpc.terra_vpc.id
+  cidr_block = element(var.subnets_cidr,count.index)
+  availability_zone = element(var.azs,count.index)
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "Subnet-${count.index+1}"
+  }
+}
+
+
+resource "aws_route_table" "public_rt" {
+  vpc_id = aws_vpc.terra_vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.terra_igw.id
+  }
+  tags = {
+    Name = "publicRouteTable"
+  }
+}
 */
 
-//Create Application Load Balancer
+resource "aws_default_vpc" "default" {
+  tags = {
+    Name = "Default VPC"
+  }
+}
+resource "aws_default_subnet" "default_az1" {
+  availability_zone = "us-east-1a"
 
+  tags = {
+    Name = "Default subnet for us-east-1a"
+  }
+}
+
+resource "aws_default_subnet" "default_az2" {
+  availability_zone = "us-east-1b"
+
+  tags = {
+    Name = "Default subnet for us-east-1b"
+  }
+}
+
+
+//Create Application Load Balancer
 resource "aws_alb" "stack-alb" {
   name            = "${local.prefix}${local.version}-alb"
   internal        = true
   security_groups = [aws_security_group.WebDMZ.id]
-  subnets            = [subnet-98c5bbfd , subnet-b54ee0ed]
+  subnets            = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
   tags = { Name= "stack-alb"}
 }
 
@@ -124,8 +177,7 @@ resource "aws_autoscaling_group" "clixx_asg" {
   health_check_grace_period = 720
   health_check_type         = "ELB"
   default_cooldown          = 30
-
-  //vpc_zone_identifier = module.core_info.private_subnets
+  vpc_zone_identifier = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
 
   enabled_metrics = [
     "GroupMinSize",
