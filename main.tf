@@ -72,6 +72,11 @@ resource "aws_default_vpc" "default" {
     Name = "Default VPC"
   }
 }
+
+resource "aws_route53_zone" "primary" {
+  name = "www.stack-cloud.com"
+}
+
 resource "aws_default_subnet" "default_az1" {
   availability_zone = "us-east-1a"
 
@@ -103,6 +108,7 @@ resource "aws_alb_target_group" "stack_alb_target_group" {
   name_prefix = "Stack"
   port        = 80
   protocol    = "HTTP"
+  vpc_id = aws_default_vpc.default.id
   stickiness {
     type = "lb_cookie"
   }
@@ -270,7 +276,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_down_alarm" {
 }
 
 resource "aws_route53_record" "clixx_rt53" {
-  zone_id = "ZZUQS582S42HN"
+  zone_id = aws_route53_zone.primary.zone_id
   name    = "www.stack-cloud.com"
   type    = "A"
   ttl     = "300"
