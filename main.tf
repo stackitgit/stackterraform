@@ -275,6 +275,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_down_alarm" {
   }
 }
 
+/*
 resource "aws_route53_record" "clixx_rt53" {
   zone_id = aws_route53_zone.primary.zone_id
   name    = "www.stack-cloud.com"
@@ -283,7 +284,7 @@ resource "aws_route53_record" "clixx_rt53" {
   records = [aws_alb.stack-alb.id]
 }
 
-/*
+
 resource "aws_acm_certificate" "cert" {
   domain_name       = "stack-cloud.com"
   validation_method = "DNS"
