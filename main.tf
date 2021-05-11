@@ -198,10 +198,14 @@ resource "aws_autoscaling_group" "clixx_asg" {
     //tags = ()
 }
 
-resource "aws_autoscaling_attachment" "asg_attachment_bar" {
+
+
+resource "aws_autoscaling_attachment" "asg_attachment_stack" {
   autoscaling_group_name = aws_autoscaling_group.clixx_asg.id
-  elb                    = aws_alb.stack-alb.id
+  alb_target_group_arn   = aws_alb_target_group.stack_alb_target_group.arn
 }
+
+
 resource "aws_autoscaling_policy" "scale_up_policy" {
   name                      = "CliXX Scale Up"
   adjustment_type           = "ChangeInCapacity"
