@@ -113,9 +113,9 @@ resource "aws_alb_target_group" "stack_alb_target_group" {
     type = "lb_cookie"
   }
   health_check {
-    path                = "/user/login"
+    path                = "/index.php"
     matcher             = "200"
-    protocol            = "HTTPS"
+    protocol            = "HTTP"
     interval            = 30
     healthy_threshold   = 2
     unhealthy_threshold = 5
@@ -198,6 +198,10 @@ resource "aws_autoscaling_group" "clixx_asg" {
     //tags = ()
 }
 
+resource "aws_autoscaling_attachment" "asg_attachment_bar" {
+  autoscaling_group_name = aws_autoscaling_group.clixx_asg.id
+  elb                    = aws_alb.stack-alb.id
+}
 resource "aws_autoscaling_policy" "scale_up_policy" {
   name                      = "CliXX Scale Up"
   adjustment_type           = "ChangeInCapacity"
