@@ -17,6 +17,7 @@ resource "aws_key_pair" "mykeypair" {
   key_name   = "mykeypair"
   public_key = file(var.PATH_TO_PUBLIC_KEY)
 }
+
 /*
 resource "aws_instance" "App_Server" {
   ami           = var.AMIS[var.AWS_REGION]
@@ -65,6 +66,7 @@ resource "aws_route_table" "public_rt" {
     Name = "publicRouteTable"
   }
 }
+
 */
 
 resource "aws_default_vpc" "default" {
@@ -195,7 +197,11 @@ resource "aws_autoscaling_group" "clixx_asg" {
     "GroupTerminatingInstances",
     "GroupTotalInstances",
   ]
-    //tags = ()
+      tag {
+    key                 = "Name"
+    value               = "CliXX-ASG"
+    propagate_at_launch = true
+  }
 }
 
 

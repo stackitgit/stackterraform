@@ -52,3 +52,16 @@ variable "min_size" {
 variable "max_size" {
   default=4
 }
+variable "subnets_cidr" {
+	type = "list"
+	default = ["172.31.64.0/20", "172.31.16.0/20"]
+}
+
+variable "vpc_cidr" {
+	default = "10.20.0.0/16"
+}
+
+variable "azs" {
+	type = "list"
+	default = ["us-east-1a", "us-east-1b"]
+}
