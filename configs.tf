@@ -6,6 +6,7 @@ data "template_file" "bootstrap" {
        DB_USER=var.DB_USER
        DB_PASSWORD=var.RDS_PASSWORD
        DB_HOST=var.DB_HOST
+       LB=aws_alb.stack-alb.*.dns_name
        //bucket_name = "${aws_s3_bucket.cloudtrail-logs.bucket}"
        //key_prefix = "AWSLogs/*" 
     }
