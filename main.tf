@@ -95,13 +95,21 @@ resource "aws_default_subnet" "default_az2" {
   }
 }
 
+resource "aws_subnet" "stack-subs" {
+  for_each = var.subnet_numbers
+
+  vpc_id            = aws_default_vpc.default.id
+  availability_zone = each.key
+  cidr_block        = cidrsubnet(aws_default_vpc.default.cidr_block, 8, each.value)
+}
 
 //Create Application Load Balancer
 resource "aws_alb" "stack-alb" {
   name            = "${local.prefix}${local.version}-alb"
   internal        = true
   security_groups = [aws_security_group.WebDMZ.id]
-  subnets            = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
+  //subnets            = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
+  subnets=aws_subnet.stack-subs.*.id
   tags = { Name= "stack-alb"}
 }
 
