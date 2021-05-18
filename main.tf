@@ -142,7 +142,7 @@ resource "aws_alb_listener" "stack_alb_secure_listener" {
 
 output "lb_dns_name" {
   description = "The DNS name of the load balancer."
-  value       = concat(aws_alb.this.*.dns_name, [""])[0]
+  value       = concat(aws_alb.stack-alb.*.dns_name, [""])[0]
 }
 //Create Launch Configuration
 
