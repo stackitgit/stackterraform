@@ -65,3 +65,9 @@ variable "azs" {
 	type = "list"
 	default = ["us-east-1a", "us-east-1b"]
 }
+
+variable "Load_Balancer" {
+  default=aws_alb.stack_alb.dns_name
+}
+
+
