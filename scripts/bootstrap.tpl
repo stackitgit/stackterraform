@@ -67,8 +67,7 @@ sudo /bin/cat <<EOP>/tmp/postinstall.sh
 
 source /tmp/config.sh
 
-#UPDATE wp_options SET option_value = "http://`curl http://169.254.169.254/latest/meta-data/public-ipv4`" WHERE option_value LIKE 'http%';
-#UPDATE wp_options SET option_value = "http://${Load_Balancer}" WHERE option_value LIKE 'http%';
+
 mysql -h ${DB_HOST} -D ${DB_NAME} -u\$MYSQL_USER -p\$MYSQL_PASS<<EOF
 show databases;
 use wordpressdb;
