@@ -67,5 +67,17 @@ variable "azs" {
 }
 
 
+variable "subnet_numbers" {
+  type = map()
+  description = "Map from availability zone to the number that should be used for each availability zone's subnet"
+  default     = {
+    "us-eat-1a" = 1
+    "us-east-1b" = 2
+    "us-east-1c" = 3
+    "us-east-1d" = 4
+    "us-east-1e" = 5
+    "us-east-1f" = 6
+  }
+}
 
 
