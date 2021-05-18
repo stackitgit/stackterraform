@@ -160,7 +160,7 @@ resource "aws_launch_configuration" "launch_config" {
   associate_public_ip_address = true
 
   security_groups = [aws_security_group.WebDMZ.id]
-  depends_on= [aws_db_instance.wordpressdbclixxrestore, aws_alb.stack_alb]
+  depends_on= [aws_db_instance.wordpressdbclixxrestore, aws_alb.stack-alb]
 
   root_block_device {
     volume_size           = 10
