@@ -10,7 +10,7 @@
       "Sid": ""
     },
     {
-      "sid": "AllowAssumeRoleForASG",
+      "Sid": "AllowAssumeRoleForASG",
       "Effect": "Allow",
       "Principal": {
         "Service": "application-autoscaling.amazonaws.com"
