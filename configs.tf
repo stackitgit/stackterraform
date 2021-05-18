@@ -1,3 +1,7 @@
+locals {
+  Load_Balancer  = aws_alb.stack_alb.dns_name
+}
+
 data "template_file" "bootstrap" {
     template = file(format("%s/scripts/bootstrap.tpl", path.module))
     vars={
@@ -6,6 +10,7 @@ data "template_file" "bootstrap" {
        DB_USER=var.DB_USER
        DB_PASSWORD=var.RDS_PASSWORD
        DB_HOST=var.DB_HOST
+       Load_Balancer=local.Load_Balancer
        //bucket_name = "${aws_s3_bucket.cloudtrail-logs.bucket}"
        //key_prefix = "AWSLogs/*" 
     }
