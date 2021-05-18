@@ -68,7 +68,6 @@ variable "azs" {
 
 
 variable "subnet_numbers" {
-  type = map()
   description = "Map from availability zone to the number that should be used for each availability zone's subnet"
   default     = {
     "us-eat-1a" = 1
