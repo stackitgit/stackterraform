@@ -130,9 +130,9 @@ resource "aws_default_subnet" "default_az5" {
 
 resource "aws_default_subnet" "main_sub" {
    for_each = var.subnet_numbers
-   vpc_id= aws_default_vpc.default.id
+   //vpc_id= aws_default_vpc.default.id
    availability_zone= each.key
-   cidr_block= cidrsubnet(aws_default_vpc.default.cidr_block, 8, each.value)
+   //cidr_block= cidrsubnet(aws_default_vpc.default.cidr_block, 8, each.value)
 }
 
 
