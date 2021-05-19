@@ -373,7 +373,7 @@ resource "aws_route53_record" "www" {
   type    = "A"
   ttl     = "300"
   //records = ["10.0.0.1"]
-  records = [aws_alb.stack-alb.dns_name]
+  records = [aws_alb.stack-alb.public_ip]
 }
 /*
 resource "aws_route53_record" "clixx_rt53" {
