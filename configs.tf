@@ -34,7 +34,7 @@ data "template_file" "wp-config" {
     db_username=local.wp_creds.username
     db_password=local.wp_creds.password
     db_name=local.wp_creds.db_name
-    db_host=var.DB_HOST
+    db_host=local.db_host
   }
 }
 resource "aws_ssm_parameter" "wp-config-parameter" {
