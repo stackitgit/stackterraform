@@ -166,7 +166,7 @@ data "aws_subnet_ids" "default" {
 resource "aws_alb" "stack-alb" {
   //for_each      = data.aws_subnet_ids.default.ids
   name            = "${local.prefix}${local.version}-alb"
-  internal        = true
+  internal        = false
   security_groups = [aws_security_group.WebDMZ.id]
   subnets            = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id,aws_default_subnet.default_az3.id,aws_default_subnet.default_az4.id,aws_default_subnet.default_az5.id,aws_default_subnet.default_az6.id]
   //subnets= data.aws_subnet_ids.default.*.id
