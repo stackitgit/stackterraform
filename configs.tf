@@ -13,12 +13,6 @@ data "template_file" "bootstrap" {
 }
 
 
-locals {
-  db_creds = jsondecode(
-    data.aws_secretsmanager_secret_version.creds.secret_string
-  )
-}
-
 data "template_file" "wp-config" {
   template = file(format("%s/config/wp-config.php", path.module))
   vars = {
