@@ -126,7 +126,7 @@ resource "aws_default_subnet" "default_az5" {
     Name = "Default subnet for us-east-1e"
   }
 }
-*/
+
 
 resource "aws_default_subnet" "main_sub" {
    for_each = var.subnet_numbers
@@ -152,14 +152,24 @@ resource "aws_default_subnet" "main_sub" {
  */
 
 
+data "aws_subnet_ids" "default" {
+  vpc_id = aws_default_vpc.default.id
+
+  tags = {
+    Tier = "default"
+  }
+}
+
+
 
 //Create Application Load Balancer
 resource "aws_alb" "stack-alb" {
+  for_each      = data.aws_subnet_ids.default.ids
   name            = "${local.prefix}${local.version}-alb"
   internal        = true
   security_groups = [aws_security_group.WebDMZ.id]
   //subnets            = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
-  subnets=aws_default_subnet.main_sub.*.id
+  subnets= each.value
   tags = { Name= "stack-alb"}
 }
 
@@ -233,6 +243,7 @@ resource "aws_launch_configuration" "launch_config" {
 
 
 resource "aws_autoscaling_group" "clixx_asg" {
+  for_each      = data.aws_subnet_ids.default.ids
   lifecycle {
     create_before_destroy = true
     ignore_changes = [load_balancers, target_group_arns]
@@ -248,7 +259,7 @@ resource "aws_autoscaling_group" "clixx_asg" {
   health_check_type         = "ELB"
   default_cooldown          = 30
   //vpc_zone_identifier = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
-  vpc_zone_identifier=aws_default_subnet.main_sub.*.id
+  vpc_zone_identifier=each.value
 
   enabled_metrics = [
     "GroupMinSize",
