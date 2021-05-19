@@ -169,7 +169,7 @@ resource "aws_alb" "stack-alb" {
   internal        = true
   security_groups = [aws_security_group.WebDMZ.id]
   //subnets            = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
-  subnets= aws_subnet_ids.default.id
+  subnets= data.aws_subnet_ids.default.*.id
   tags = { Name= "stack-alb"}
 }
 
