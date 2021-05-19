@@ -373,7 +373,12 @@ resource "aws_route53_record" "www" {
   type    = "A"
   ttl     = "300"
   //records = ["10.0.0.1"]
-  records = [aws_alb.stack-alb.public_ip]
+  //records = [aws_alb.stack-alb.public_ip]
+   alias {
+    name                   = aws_alb.stack-alb.dns_name
+    zone_id                = aws_alb.stack-alb.zone_id
+    evaluate_target_health = true
+  }
 }
 /*
 resource "aws_route53_record" "clixx_rt53" {
