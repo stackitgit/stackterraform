@@ -247,7 +247,8 @@ resource "aws_autoscaling_group" "clixx_asg" {
   health_check_grace_period = 720
   health_check_type         = "ELB"
   default_cooldown          = 30
-  vpc_zone_identifier = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
+  //vpc_zone_identifier = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
+  vpc_zone_identifier=aws_default_subnet.main_sub.*.id
 
   enabled_metrics = [
     "GroupMinSize",
