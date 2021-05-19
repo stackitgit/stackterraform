@@ -164,12 +164,12 @@ data "aws_subnet_ids" "default" {
 
 //Create Application Load Balancer
 resource "aws_alb" "stack-alb" {
-  for_each      = data.aws_subnet_ids.default.ids
+  //for_each      = data.aws_subnet_ids.default.ids
   name            = "${local.prefix}${local.version}-alb"
   internal        = true
   security_groups = [aws_security_group.WebDMZ.id]
   //subnets            = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
-  subnets= each.value
+  subnets= aws_subnet_ids.default.*.id
   tags = { Name= "stack-alb"}
 }
 
