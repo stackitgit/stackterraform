@@ -40,14 +40,25 @@ output "this_db_instance_address" {
 
 */
 
+data "aws_kms_secrets" "creds" {
+  secret {
+    name    = "app_db"
+    payload = file("${path.module}/db-creds.yml.encrypted")
+  }
+}
+
+locals {
+  db_creds = yamldecode(data.aws_kms_secrets.creds.plaintext["app_db"])
+}
+
 
 resource "aws_db_instance" "wordpressdbclixxrestore" {
   instance_class      = "db.t2.micro"
   snapshot_identifier = var.PROD_DB_SNAPSHOT
   identifier="wordpressdbclixx"
   #username= "wordpressuser"
-  username=var.DB_USER
-  password= var.RDS_PASSWORD
+  username=local.db_creds.username
+  password=local.db_creds.password
   skip_final_snapshot = true
   vpc_security_group_ids=[aws_security_group.WebDMZ.id]
   backup_retention_period = 0

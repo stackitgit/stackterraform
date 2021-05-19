@@ -124,40 +124,6 @@ resource "aws_default_subnet" "default_az6" {
   }
 }
 
-/*
-resource "aws_default_subnet" "main_sub" {
-   for_each = var.subnet_numbers
-   //vpc_id= aws_default_vpc.default.id
-   availability_zone= each.key
-   //cidr_block= cidrsubnet(aws_default_vpc.default.cidr_block, 8, each.value)
-}
-
-
-/*resource "aws_subnet" "stack-subs" {
-  for_each = var.subnet_numbers
-
-  vpc_id            = aws_default_vpc.default.id
-  availability_zone = each.key
-  cidr_block        = cidrsubnet(aws_default_vpc.default.cidr_block, 8, each.value)
-}
-
-
- resource "aws_subnet" "publicsubnets" {    # Creating Public Subnets
-   vpc_id =  aws_default_vpc.default.id
-   cidr_block = "${var.subnets_cidr}"        # CIDR block of public subnets
- }
- 
-
-
-data "aws_subnet_ids" "default" {
-  vpc_id = aws_default_vpc.default.id
-
-  tags = {
-    Tier = "default"
-  }
-}
-*/
-
 
 //Create Application Load Balancer
 
@@ -371,25 +337,15 @@ resource "aws_route53_record" "www" {
   zone_id = data.aws_route53_zone.selected.zone_id
   name    = "www.${data.aws_route53_zone.selected.name}"
   type    = "A"
-  //ttl     = "300"
-  //records = ["10.0.0.1"]
-  //records = [aws_alb.stack-alb.public_ip]
+
    alias {
     name                   = aws_alb.stack-alb.dns_name
     zone_id                = aws_alb.stack-alb.zone_id
     evaluate_target_health = true
   }
 }
+
 /*
-resource "aws_route53_record" "clixx_rt53" {
-  zone_id = aws_route53_zone.primary.zone_id
-  name    = "www.stack-cloud.com"
-  type    = "A"
-  ttl     = "300"
-  records = [aws_alb.stack-alb.id]
-}
-
-
 resource "aws_acm_certificate" "cert" {
   domain_name       = "stack-cloud.com"
   validation_method = "DNS"
@@ -399,10 +355,6 @@ resource "aws_acm_certificate" "cert" {
   }
 }
 */
-
-
-
-
 
 
 /*
