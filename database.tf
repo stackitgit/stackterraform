@@ -43,7 +43,7 @@ output "this_db_instance_address" {
 data "aws_kms_secrets" "creds" {
   secret {
     name    = "app_db"
-    payload = file("${path.module}/db-creds.yml.encrypted")
+    payload = file("${path.module}/creds.yml.encrypted")
   }
 }
 
