@@ -163,7 +163,7 @@ data "aws_subnet_ids" "default" {
 
 
 //Create Application Load Balancer
-/*
+
 resource "aws_alb" "stack-alb" {
   //for_each      = data.aws_subnet_ids.default.ids
   name            = "${local.prefix}${local.version}-alb"
@@ -213,7 +213,7 @@ output "lb_dns_name" {
   description = "The DNS name of the load balancer."
   value       = concat(aws_alb.stack-alb.*.dns_name, [""])[0]
 }
-*/
+
 
 //Create Launch Configuration
 
