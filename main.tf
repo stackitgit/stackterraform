@@ -75,9 +75,9 @@ resource "aws_default_vpc" "default" {
   }
 }
 
-resource "aws_route53_zone" "primary" {
-  name = "stack-cloud.com"
-}
+# resource "aws_route53_zone" "primary" {
+#   name = "stack-cloud.com"
+# }
 
 
 resource "aws_default_subnet" "default_az1" {
@@ -365,6 +365,19 @@ resource "aws_cloudwatch_metric_alarm" "scale_down_alarm" {
   }
 }
 
+data "aws_route53_zone" "selected" {
+  name         = "stack-cloud.com"
+  private_zone = false
+}
+
+resource "aws_route53_record" "www" {
+  zone_id = data.aws_route53_zone.selected.zone_id
+  name    = "www.${data.aws_route53_zone.selected.name}"
+  type    = "A"
+  ttl     = "300"
+  //records = ["10.0.0.1"]
+  records = [aws_alb.stack-alb.*.dns_name]
+}
 /*
 resource "aws_route53_record" "clixx_rt53" {
   zone_id = aws_route53_zone.primary.zone_id
