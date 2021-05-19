@@ -79,6 +79,7 @@ resource "aws_route53_zone" "primary" {
   name = "stack-cloud.com"
 }
 
+/*
 resource "aws_default_subnet" "default_az1" {
   availability_zone = "us-east-1a"
 
@@ -95,6 +96,51 @@ resource "aws_default_subnet" "default_az2" {
   }
 }
 
+resource "aws_default_subnet" "default_az2" {
+  availability_zone = "us-east-1b"
+
+  tags = {
+    Name = "Default subnet for us-east-1b"
+  }
+}
+resource "aws_default_subnet" "default_az3" {
+  availability_zone = "us-east-1c"
+
+  tags = {
+    Name = "Default subnet for us-east-1c"
+  }
+}
+
+resource "aws_default_subnet" "default_az4" {
+  availability_zone = "us-east-1d"
+
+  tags = {
+    Name = "Default subnet for us-east-1d"
+  }
+}
+
+resource "aws_default_subnet" "default_az5" {
+  availability_zone = "us-east-1e"
+
+  tags = {
+    Name = "Default subnet for us-east-1e"
+  }
+}
+*/
+
+resource "aws_default_subnet" "main_sub" {
+   for_each = var.subnet_numbers
+
+  vpc_id            = aws_default_vpc.default.id
+  availability_zone = each.key
+  cidr_block        = cidrsubnet(aws_default_vpc.default.cidr_block, 8, each.value)
+
+  tags = {
+    Name = "Default subnets"
+  }
+}
+
+
 /*resource "aws_subnet" "stack-subs" {
   for_each = var.subnet_numbers
 
@@ -102,13 +148,14 @@ resource "aws_default_subnet" "default_az2" {
   availability_zone = each.key
   cidr_block        = cidrsubnet(aws_default_vpc.default.cidr_block, 8, each.value)
 }
-*/
+
 
  resource "aws_subnet" "publicsubnets" {    # Creating Public Subnets
    vpc_id =  aws_default_vpc.default.id
    cidr_block = "${var.subnets_cidr}"        # CIDR block of public subnets
  }
- 
+ */
+
 
 
 //Create Application Load Balancer
@@ -117,7 +164,7 @@ resource "aws_alb" "stack-alb" {
   internal        = true
   security_groups = [aws_security_group.WebDMZ.id]
   //subnets            = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
-  subnets=aws_subnet.publicsubnets.*.id
+  subnets=aws_default_subnet.main_sub.*.id
   tags = { Name= "stack-alb"}
 }
 
