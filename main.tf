@@ -79,7 +79,7 @@ resource "aws_route53_zone" "primary" {
   name = "stack-cloud.com"
 }
 
-/*
+
 resource "aws_default_subnet" "default_az1" {
   availability_zone = "us-east-1a"
 
@@ -96,13 +96,6 @@ resource "aws_default_subnet" "default_az2" {
   }
 }
 
-resource "aws_default_subnet" "default_az2" {
-  availability_zone = "us-east-1b"
-
-  tags = {
-    Name = "Default subnet for us-east-1b"
-  }
-}
 resource "aws_default_subnet" "default_az3" {
   availability_zone = "us-east-1c"
 
@@ -110,7 +103,6 @@ resource "aws_default_subnet" "default_az3" {
     Name = "Default subnet for us-east-1c"
   }
 }
-
 resource "aws_default_subnet" "default_az4" {
   availability_zone = "us-east-1d"
 
@@ -127,7 +119,15 @@ resource "aws_default_subnet" "default_az5" {
   }
 }
 
+resource "aws_default_subnet" "default_az6" {
+  availability_zone = "us-east-1f"
 
+  tags = {
+    Name = "Default subnet for us-east-1f"
+  }
+}
+
+/*
 resource "aws_default_subnet" "main_sub" {
    for_each = var.subnet_numbers
    //vpc_id= aws_default_vpc.default.id
@@ -149,7 +149,7 @@ resource "aws_default_subnet" "main_sub" {
    vpc_id =  aws_default_vpc.default.id
    cidr_block = "${var.subnets_cidr}"        # CIDR block of public subnets
  }
- */
+ 
 
 
 data "aws_subnet_ids" "default" {
@@ -159,7 +159,7 @@ data "aws_subnet_ids" "default" {
     Tier = "default"
   }
 }
-
+*/
 
 
 //Create Application Load Balancer
@@ -168,8 +168,8 @@ resource "aws_alb" "stack-alb" {
   name            = "${local.prefix}${local.version}-alb"
   internal        = true
   security_groups = [aws_security_group.WebDMZ.id]
-  //subnets            = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
-  subnets= data.aws_subnet_ids.default.*.id
+  subnets            = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id,aws_default_subnet.default_az3.id,aws_default_subnet.default_az4.id,aws_default_subnet.default_az5.id,aws_default_subnet.default_az6.id]
+  //subnets= data.aws_subnet_ids.default.*.id
   tags = { Name= "stack-alb"}
 }
 
@@ -257,8 +257,8 @@ resource "aws_autoscaling_group" "clixx_asg" {
   health_check_grace_period = 720
   health_check_type         = "ELB"
   default_cooldown          = 30
-  //vpc_zone_identifier = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id]
-  vpc_zone_identifier=data.aws_subnet_ids.default.*.id
+  vpc_zone_identifier = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id,aws_default_subnet.default_az3.id,aws_default_subnet.default_az4.id,aws_default_subnet.default_az5.id,aws_default_subnet.default_az6.id]
+  //vpc_zone_identifier=data.aws_subnet_ids.default.*.id
 
   enabled_metrics = [
     "GroupMinSize",
