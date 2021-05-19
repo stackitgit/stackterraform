@@ -14,7 +14,7 @@ data "template_file" "bootstrap" {
 
 
 data "template_file" "wp-config" {
-  template = file(format("%s/config/wp-config.php", path.module))
+  template = file(format("%s/configs/wp-config.php", path.module))
   vars = {
     db_username=local.db_creds.username
     db_password=local.db_creds.password
