@@ -22,6 +22,7 @@ locals {
   wp_creds = jsondecode(
     data.aws_secretsmanager_secret_version.wpcreds.secret_string
   )
+  ssm_parameter_path="/stack"
 }
 
 data "template_file" "wp-config" {
