@@ -75,9 +75,6 @@ resource "aws_default_vpc" "default" {
   }
 }
 
-# resource "aws_route53_zone" "primary" {
-#   name = "stack-cloud.com"
-# }
 
 
 resource "aws_default_subnet" "default_az1" {
@@ -376,7 +373,7 @@ resource "aws_route53_record" "www" {
   type    = "A"
   ttl     = "300"
   //records = ["10.0.0.1"]
-  records = [aws_alb.stack-alb.*.dns_name]
+  records = [aws_alb.stack-alb.dns_name]
 }
 /*
 resource "aws_route53_record" "clixx_rt53" {
