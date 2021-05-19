@@ -36,7 +36,7 @@ data "template_file" "wp-config" {
 resource "aws_ssm_parameter" "wp-config-parameter" {
   name      = "${local.ssm_parameter_path}/var/www/html/wp-config.php"
   type      = "SecureString"
-  value     = base64encode(data.template_file.nginx.rendered)
+  value     = base64encode(data.template_file.wp-config.rendered)
   overwrite = "true"
 }
 
