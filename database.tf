@@ -40,15 +40,28 @@ output "this_db_instance_address" {
 
 */
 
-data "aws_kms_secrets" "creds" {
-  secret {
-    name    = "app_db"
-    payload = file("${path.module}/creds.yml.encrypted")
-  }
+//Using KMS to manage secrets
+# data "aws_kms_secrets" "creds" {
+#   secret {
+#     name    = "app_db"
+#     payload = file("${path.module}/creds.yml.encrypted")
+#   }
+# }
+
+# locals {
+#   db_creds = yamldecode(data.aws_kms_secrets.creds.plaintext["app_db"])
+# }
+
+//Using Secrets Manager to manage secrets
+data "aws_secretsmanager_secret_version" "creds" {
+  # Fill in the name you gave to your secret
+  secret_id = "creds"
 }
 
 locals {
-  db_creds = yamldecode(data.aws_kms_secrets.creds.plaintext["app_db"])
+  db_creds = jsondecode(
+    data.aws_secretsmanager_secret_version.creds.secret_string
+  )
 }
 
 
@@ -56,7 +69,6 @@ resource "aws_db_instance" "wordpressdbclixxrestore" {
   instance_class      = "db.t2.micro"
   snapshot_identifier = var.PROD_DB_SNAPSHOT
   identifier="wordpressdbclixx"
-  #username= "wordpressuser"
   username=local.db_creds.username
   password=local.db_creds.password
   skip_final_snapshot = true
