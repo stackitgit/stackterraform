@@ -1,3 +1,11 @@
+locals {
+  wp_creds = jsondecode(
+    data.aws_secretsmanager_secret_version.wpcreds.secret_string
+  )
+  ssm_parameter_path="/stack"
+  db_host=var.DB_HOST
+}
+
 data "template_file" "bootstrap" {
     template = file(format("%s/scripts/bootstrap.tpl", path.module))
     vars={
@@ -5,7 +13,7 @@ data "template_file" "bootstrap" {
        DB_NAME=var.DB_NAME
        DB_USER=var.DB_USER
        DB_PASSWORD=var.RDS_PASSWORD
-       DB_HOST=var.DB_HOST
+       DB_HOST=local.db_host
        LB=aws_alb.stack-alb.dns_name
        //bucket_name = "${aws_s3_bucket.cloudtrail-logs.bucket}"
        //key_prefix = "AWSLogs/*" 
@@ -18,12 +26,7 @@ data "aws_secretsmanager_secret_version" "wpcreds" {
   secret_id = "creds"
 }
 
-locals {
-  wp_creds = jsondecode(
-    data.aws_secretsmanager_secret_version.wpcreds.secret_string
-  )
-  ssm_parameter_path="/stack"
-}
+
 
 data "template_file" "wp-config" {
   template = file(format("%s/configs/wp-config.php", path.module))
