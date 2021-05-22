@@ -80,7 +80,7 @@ variable "subnet_numbers" {
   }
 }
 
-variable "public_subnets" {}
+# variable "public_subnets" {}
 
-variable "private_subnets" {}
+# variable "private_subnets" {}
 
