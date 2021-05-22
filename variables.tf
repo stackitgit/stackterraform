@@ -20,7 +20,7 @@ variable "AMIS" {
   default = {
    # us-east-1 = "ami-13be557e"
     //us-east-1 = "ami-08f3d892de259504d"
-    us-east-1= "stack-ami-1.0/1.0.6"
+    us-east-1= "ami-stack-1.0/1.0.6"
     us-west-2 = "ami-06b94666"
     eu-west-1 = "ami-844e0bf7"
   }
