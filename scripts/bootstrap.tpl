@@ -1,6 +1,6 @@
 #!/bin/bash
 
-##Install the needed packages and enable the services(MariaDb, Apache)
+{* ##Install the needed packages and enable the services(MariaDb, Apache)
 sudo yum update -y
 sudo yum install git -y
 sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
@@ -17,7 +17,7 @@ find /var/www -type f -exec sudo chmod 0664 {} \;
 cd /var/www/html
 mkdir -p /etc/tls
 
-#Install wordpress and unzip it/copy the sample php conf to wp-config
+#Install wordpress and unzip it/copy the sample php conf to wp-config *}
 
 
 git clone https://github.com/stackitgit/CliXX_Retail_Repository.git
@@ -32,7 +32,7 @@ sudo sed -i s/username_here/${DB_USER}/ /var/www/html/wp-config.php
 sudo sed -i s/password_here/${DB_PASSWORD}/ /var/www/html/wp-config.php 
 sudo sed -i s/localhost/${DB_HOST}/ /var/www/html/wp-config.php 
 
-
+{* 
 ## Allow wordpress to use Permalinks
 sudo sed -i '151s/None/All/' /etc/httpd/conf/httpd.conf
 
@@ -55,7 +55,7 @@ sudo service httpd restart
 
 ##Enable httpd 
 sudo systemctl enable httpd 
-sudo /sbin/sysctl -w net.ipv4.tcp_keepalive_time=200 net.ipv4.tcp_keepalive_intvl=200 net.ipv4.tcp_keepalive_probes=5
+sudo /sbin/sysctl -w net.ipv4.tcp_keepalive_time=200 net.ipv4.tcp_keepalive_intvl=200 net.ipv4.tcp_keepalive_probes=5 *}
 
 sudo /bin/cat <<EOP>/tmp/config.sh
 MYSQL_USER="${DB_USER}"
@@ -67,11 +67,12 @@ sudo /bin/cat <<EOP>/tmp/postinstall.sh
 
 source /tmp/config.sh
 
+#UPDATE wp_options SET option_value = "http://`curl http://169.254.169.254/latest/meta-data/public-ipv4`" WHERE option_value LIKE 'http%';
 
 mysql -h ${DB_HOST} -D ${DB_NAME} -u\$MYSQL_USER -p\$MYSQL_PASS<<EOF
 show databases;
 use wordpressdb;
-UPDATE wp_options SET option_value = "http://`curl http://169.254.169.254/latest/meta-data/public-ipv4`" WHERE option_value LIKE 'http%';
+UPDATE wp_options SET option_value = "http://${LB}" WHERE option_value LIKE 'http%';
 commit;
 EOF
 EOP

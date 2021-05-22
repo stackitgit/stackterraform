@@ -19,7 +19,8 @@ variable "AMIS" {
   type = map(string)
   default = {
    # us-east-1 = "ami-13be557e"
-    us-east-1 = "ami-08f3d892de259504d"
+    //us-east-1 = "ami-08f3d892de259504d"
+    us-east-1= "stack-ami-1.0/1.0.6"
     us-west-2 = "ami-06b94666"
     eu-west-1 = "ami-844e0bf7"
   }
@@ -54,7 +55,7 @@ variable "max_size" {
 }
 variable "subnets_cidr" {
 	type = "list"
-	default = ["172.31.64.0/20", "172.31.16.0/20"]
+	default = ["172.31.64.0/20", "172.31.16.0/20","172.31.32.0/20","172.31.0.0/20","172.31.80.0/20","172.31.48.0/20"]
 }
 
 variable "vpc_cidr" {
@@ -63,14 +64,14 @@ variable "vpc_cidr" {
 
 variable "azs" {
 	type = "list"
-	default = ["us-east-1a", "us-east-1b"]
+	default = ["us-east-1a", "us-east-1b","us-east-1c","us-east-1d","us-east-1e","us-east-1f"]
 }
 
 
 variable "subnet_numbers" {
   description = "Map from availability zone to the number that should be used for each availability zone's subnet"
   default     = {
-    "us-eat-1a" = 1
+    "us-east-1a" = 1
     "us-east-1b" = 2
     "us-east-1c" = 3
     "us-east-1d" = 4
@@ -79,4 +80,7 @@ variable "subnet_numbers" {
   }
 }
 
+variable "public_subnets" {}
+
+variable "private_subnets" {}
 
