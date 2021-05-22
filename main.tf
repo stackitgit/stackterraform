@@ -178,6 +178,16 @@ output "lb_dns_name" {
 }
 
 
+data "aws_ami" "stack" {
+  owners     = ["self"]
+  name_regex = "^"
+
+  filter {
+    name   = "name"
+    values = ["ami-stack-1.0"]
+  }
+}
+
 //Create Launch Configuration
 
 resource "aws_launch_configuration" "launch_config" {
@@ -186,9 +196,9 @@ resource "aws_launch_configuration" "launch_config" {
   }
 
   name_prefix = "${local.prefix}_${local.version}-"
-
+  image_id=data.aws_ami.stack.id
   //image_id = var.AMIS[var.AWS_REGION]
-  ami=var.AMIS[var.AWS_REGION]
+  //ami=var.AMIS[var.AWS_REGION]
   instance_type = var.instance_type
   iam_instance_profile   = "${aws_iam_instance_profile.stack_profile.name}"
   key_name = aws_key_pair.mykeypair.key_name
