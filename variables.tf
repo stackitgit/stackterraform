@@ -32,3 +32,32 @@ variable "group" {
 variable "policy" {
   default="stack-poli1"
 }
+
+variable "server"{
+  default=""
+}
+
+
+variable "environment" {
+  default="Dev"
+}
+
+variable "region" {
+  default="region"
+}
+
+variable "system" {
+  default="CliXX"
+}
+
+
+variable "owner_email" {
+}
+
+variable "backup" {
+  default="Yes"
+}
+
+variable "support_email" {
+  default="support@stackitsolutions.com"
+}
