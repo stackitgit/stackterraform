@@ -1,10 +1,10 @@
 variable "required_tags"{
 description="Tags required to be specified on all resources"
 type=object({
-  Environment=string
-  OwnerEmail=string
-  System=string
-  Backup=string
+  Environment=string,
+  OwnerEmail=string,
+  System=string,
+  Backup=string,
   Region=string
 })
 validation{
@@ -27,7 +27,7 @@ validation{
 }
 
 validation{
-   condition=var.required_tags.Region !="" && var.required_tags.Region == lower(var.required_tags.OwnerEmail)
+   condition=var.required_tags.Region !="" && var.required_tags.Region == lower(var.required_tags.Region)
    error_message= "Region must be lowercase and non-empty."
 }
 
