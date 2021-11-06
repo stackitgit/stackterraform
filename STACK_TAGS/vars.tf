@@ -1,10 +1,10 @@
 variable "required_tags"{
 description="Tags required to be specified on all resources"
 type=object({
-  Environment=string,
-  OwnerEmail=string,
-  System=string,
-  Backup=string,
+  Environment=string
+  OwnerEmail=string
+  System=string
+  Backup=string
   Region=string
 })
 validation{
