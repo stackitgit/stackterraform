@@ -39,19 +39,20 @@ variable "server"{
 
 
 variable "environment" {
-  default="Dev"
+  default="dev"
 }
 
 variable "region" {
   default="region"
 }
 
-variable "system" {
+variable "subsystem" {
   default="CliXX"
 }
 
 
-variable "owner_email" {
+variable "OwnerEmail" {
+  default="michael.ojejinmi@stackitsolutions.com"
 }
 
 variable "backup" {

@@ -2,6 +2,7 @@ resource "aws_iam_user" "user" {
   name          = var.username
   path          = "/"
   force_destroy = true
+  tags=(module.STACK-TAGS.all_resource_tags)
 }
 
 resource "aws_iam_user_login_profile" "log-prof" {
