@@ -3,6 +3,9 @@ description="Tags required to be specified on all resources"
 type=object({
   Environment=string
   OwnerEmail=string
+  System=string
+  Backup=string
+  Region=string
 })
 validation{
    condition=var.required_tags.OwnerEmail !="" && var.required_tags.OwnerEmail == lower(var.required_tags.OwnerEmail)
@@ -11,6 +14,21 @@ validation{
 validation{
    condition = contains(["dev","test","uat","production"], var.required_tags.Environment)
    error_message="Environment must be in the following list: [dev,test,uat,production]."
+}
+
+validation{
+  condition=var.required_tags.System !="" && var.required_tags.System==lower(var.required_tags.System)
+  error_message="System must be lowercase and non-empty."
+}
+
+validation{
+   condition = contains(["YES","yes","NO","no","Yes","No"], var.required_tags.Backup)
+   error_message="Backup must be in the following list: [YES,yes,NO,no,Yes,No]."
+}
+
+validation{
+   condition=var.required_tags.Region !="" && var.required_tags.Region == lower(var.required_tags.OwnerEmail)
+   error_message= "Region must be lowercase and non-empty."
 }
 
 }
