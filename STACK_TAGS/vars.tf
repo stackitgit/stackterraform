@@ -15,11 +15,11 @@ validation{
 
 }
 
-variable "tag_sets" {
-  description="Tag sets that are auto-prefixed"
-  type=map(map(string))
-  default={}
-}
+# variable "tag_sets" {
+#   description="Tag sets that are auto-prefixed"
+#   type=map(map(string))
+#   default={}
+# }
 
 # variable "server"{
 # }
