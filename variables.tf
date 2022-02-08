@@ -54,7 +54,7 @@ variable "max_size" {
   default=4
 }
 variable "subnets_cidr" {
-	type = "list"
+	# type = "list"
 	default = ["172.31.64.0/20", "172.31.16.0/20","172.31.32.0/20","172.31.0.0/20","172.31.80.0/20","172.31.48.0/20"]
 }
 
@@ -63,7 +63,7 @@ variable "vpc_cidr" {
 }
 
 variable "azs" {
-	type = "list"
+	# type = "list"
 	default = ["us-east-1a", "us-east-1b","us-east-1c","us-east-1d","us-east-1e","us-east-1f"]
 }
 

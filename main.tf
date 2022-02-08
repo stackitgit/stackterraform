@@ -7,25 +7,24 @@ terraform {
       source = "hashicorp/random"
     }
   }
-
   cloud {
     organization = "Stack-IT"
-   workspaces {
+    workspaces {
       name = "stackterraform"
     }
   }
 }
 
 
-terraform{
-         backend "s3"{
-                bucket= "stackbuckstatemike"
-                //bucket= "stackstatebuck2"
-                key = "terraform.tfstate"
-                    region="us-east-1"
-                     dynamodb_table="statelock-tf"
-                 }
- }
+# terraform{
+#          backend "s3"{
+#                 bucket= "stackbuckstatemike"
+#                 //bucket= "stackstatebuck2"
+#                 key = "terraform.tfstate"
+#                     region="us-east-1"
+#                      dynamodb_table="statelock-tf"
+#                  }
+#  }
 
 locals {
   prefix  = "clixx"
