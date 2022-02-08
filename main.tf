@@ -1,3 +1,22 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+    random = {
+      source = "hashicorp/random"
+    }
+  }
+
+  cloud {
+    organization = "Stack-IT"
+   workspaces {
+      name = "stackterraform"
+    }
+  }
+}
+
+
 terraform{
          backend "s3"{
                 bucket= "stackbuckstatemike"
