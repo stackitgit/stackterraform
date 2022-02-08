@@ -1,3 +1,8 @@
+data "aws_secretsmanager_secret_version" "wpcreds" {
+  # Fill in the name you gave to your secret
+  secret_id = "creds"
+}
+
 locals {
   wp_creds = jsondecode(
     data.aws_secretsmanager_secret_version.wpcreds.secret_string
@@ -6,10 +11,7 @@ locals {
   db_host=var.DB_HOST
 }
 
-data "aws_secretsmanager_secret_version" "wpcreds" {
-  # Fill in the name you gave to your secret
-  secret_id = "creds"
-}
+
 
 
 data "template_file" "bootstrap" {
