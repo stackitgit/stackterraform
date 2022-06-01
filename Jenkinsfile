@@ -1,11 +1,11 @@
 pipeline {
     agent any
-//     parameters{  withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
-//     // some block
-// }}
-    parameters {
-        credentials credentialType: 'com.cloudbees.jenkins.plugins.awscredentials.AWSCredentialsImpl', defaultValue: 'stack-terraform', name: 'AWS', required: false
-    }
+// //     parameters{  withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+// //     // some block
+// // }}
+//     parameters {
+//         credentials credentialType: 'com.cloudbees.jenkins.plugins.awscredentials.AWSCredentialsImpl', defaultValue: 'stack-terraform', name: 'AWS', required: false
+//     }
 
     environment {
         PATH = "${PATH}:${getTerraformPath()}"
