@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters{  withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+    // some block
+}}
     environment {
         PATH = "${PATH}:${getTerraformPath()}"
     }
