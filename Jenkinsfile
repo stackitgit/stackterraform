@@ -13,7 +13,7 @@ pipeline {
              }
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
-                 //change
+                 
                  slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
 
                  sh "terraform init"
