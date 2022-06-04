@@ -1,21 +1,12 @@
 pipeline {
     agent any
-
     environment {
         PATH = "${PATH}:${getTerraformPath()}"
     }
     stages{
          stage('terraform init'){
-
-             environment{
-                 AWS_ACCESS_KEY_ID= credentials('ACCESS_KEY_ID')
-                 AWS_SECRET_ACCESS_KEY= credentials('SECRET_KEY')
-             }
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
-                 
-                 slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-
                  sh "terraform init"
                  
          }
@@ -38,9 +29,7 @@ pipeline {
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
                  //sh "terraform apply -auto-approve"
-                 sh "terraform destroy -input=false -auto-approve"
-                //sh "terraform apply  -input=false tfplan"
-                
+                 sh "terraform apply  -input=false tfplan"
              }
          }
 
