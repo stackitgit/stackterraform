@@ -5,6 +5,11 @@ pipeline {
     }
     stages{
          stage('terraform init'){
+             
+             environment{
+                 AWS_ACCESS_KEY_ID= credentials('ACCESS_KEY_ID')
+                 AWS_SECRET_ACCESS_KEY= credentials('SECRET_KEY')
+             }
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
                  sh "terraform init"
