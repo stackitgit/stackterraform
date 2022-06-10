@@ -46,12 +46,6 @@ pipeline {
              }
          }
         
-         stage('Build Ansible Inventory List For Post Configuration'){
-             steps {
-                 sh "/home/ec2-user/build_inventory_list.sh"
-         }
-          
-    }
 }
  def getTerraformPath(){
         def tfHome= tool name: 'terraform-14', type: 'terraform'
