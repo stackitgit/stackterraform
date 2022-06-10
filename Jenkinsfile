@@ -7,6 +7,14 @@ pipeline {
         PATH = "${PATH}:${getTerraformPath()}"
     }
     stages{
+
+         stage('Initial Deployment Approval') {
+              steps {
+                script {
+                def userInput = input(id: 'confirm', message: 'Start Pipeline?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Start Pipeline', name: 'confirm'] ])
+             }
+           }
+        }
          stage('terraform init'){
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
