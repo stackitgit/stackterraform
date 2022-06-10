@@ -15,6 +15,16 @@ pipeline {
              }
            }
         }
+
+         stage('Ansible Installation'){
+             steps {
+                 //sh "returnStatus: true, script: 'terraform workspace new dev'"
+                 sh "sudo yum update -y"
+                 sh "sudo yum install ansible -y"
+                 
+         }
+         }
+
          stage('terraform init'){
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
