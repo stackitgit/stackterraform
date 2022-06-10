@@ -1,15 +1,13 @@
 pipeline {
     agent any
+    parameters {
+  credentials credentialType: 'com.cloudbees.jenkins.plugins.awscredentials.AWSCredentialsImpl', defaultValue: '3bc3c0e2-3081-41ef-92ad-09195816a3f7', name: 'AWS_CREDS', required: false
+}
     environment {
         PATH = "${PATH}:${getTerraformPath()}"
     }
     stages{
          stage('terraform init'){
-
-             environment{
-                 AWS_ACCESS_KEY_ID= credentials('ACCESS_KEY_ID')
-                 AWS_SECRET_ACCESS_KEY= credentials('SECRET_KEY')
-             }
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
                  sh "terraform init"
