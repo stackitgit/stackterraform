@@ -7,12 +7,12 @@ terraform {
       source = "hashicorp/random"
     }
   }
-  cloud {
-    organization = "Stack-IT"
-    workspaces {
-      name = "stackterraform"
-    }
-  }
+  # cloud {
+  #   organization = "Stack-IT"
+  #   workspaces {
+  #     name = "stackterraform"
+  #   }
+  # }
 }
 
 
