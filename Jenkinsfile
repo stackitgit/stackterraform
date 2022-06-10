@@ -48,7 +48,7 @@ pipeline {
         
          stage('Build Ansible Inventory List For Post Configuration'){
              steps {
-                 sh "build_inventory_list.sh"
+                 sh "/home/ec2-user/build_inventory_list.sh"
          }
           
     }
