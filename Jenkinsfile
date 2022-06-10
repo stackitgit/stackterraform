@@ -45,8 +45,9 @@ pipeline {
                  sh "terraform apply  -input=false tfplan"
              }
          }
-        
+    }
 }
+
  def getTerraformPath(){
         def tfHome= tool name: 'terraform-14', type: 'terraform'
         return tfHome
