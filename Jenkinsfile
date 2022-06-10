@@ -45,6 +45,15 @@ pipeline {
                  sh "terraform apply  -input=false tfplan"
              }
          }
+
+         stage('Build List'){
+             steps {
+                 //sh "returnStatus: true, script: 'terraform workspace new dev'"
+                 //sh "terraform apply -auto-approve"
+                //  sh "terraform destroy -input=false -auto-approve"
+                 sh "/home/ec2-user/build_inventory_list.sh"
+             }
+         }
     }
 }
 
