@@ -48,7 +48,7 @@ pipeline {
         
          stage('Build Ansible Inventory List For Post Configuration'){
              steps {
-                 sh "aws ec2 describe-instances --query \"Reservations[*].Instances[*].{PublicIP:PublicIpAddress}\" --filters  \"Name=instance-state-name, Values=running\" \"Name=tag:Name, Values='CliXX-ASG'\" --output text > server_inventory_list"
+                 sh "aws ec2 describe-instances --query \"Reservations[*].Instances[*].{PublicIP:PublicIpAddress}\" --filters  \"Name=instance-state-name, Values=running\" \"Name=tag:Name, Values='CliXX-ASG'\" --output text --region us-east-1 > server_inventory_list"
              }
          }
           
