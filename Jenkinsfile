@@ -41,26 +41,26 @@ pipeline {
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
                  //sh "terraform apply -auto-approve"
-                 sh "terraform destroy -input=false -auto-approve"
-                //  sh "terraform apply  -input=false tfplan"
-             }
-         }
-          stage('UAT Deployment Approval') {
-              steps {
-                script {
-                def userInput = input(id: 'confirm', message: 'Deploy into UAT?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Deploy Into UAT', name: 'confirm'] ])
-             }
-           }
-        }
-
-        stage('Deploy into UAT'){
-             steps {
-                 //sh "returnStatus: true, script: 'terraform workspace new dev'"
-                 //sh "terraform apply -auto-approve"
                 //  sh "terraform destroy -input=false -auto-approve"
                  sh "terraform apply  -input=false tfplan"
              }
          }
+        //   stage('UAT Deployment Approval') {
+        //       steps {
+        //         script {
+        //         def userInput = input(id: 'confirm', message: 'Deploy into UAT?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Deploy Into UAT', name: 'confirm'] ])
+        //      }
+        //    }
+        // }
+
+        // stage('Deploy into UAT'){
+        //      steps {
+        //          //sh "returnStatus: true, script: 'terraform workspace new dev'"
+        //          //sh "terraform apply -auto-approve"
+        //         //  sh "terraform destroy -input=false -auto-approve"
+        //          sh "terraform apply  -input=false tfplan"
+        //      }
+        //  }
         
     }
 }
