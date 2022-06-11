@@ -30,14 +30,14 @@ pipeline {
                  sh "terraform plan -out=tfplan -input=false"
              }
          }
-        stage('Final Deployment Approval') {
+        stage('Test Deployment Approval') {
               steps {
                 script {
                 def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
              }
            }
         }
-         stage('Terraform Apply'){
+         stage('Deploy into Test'){
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
                  //sh "terraform apply -auto-approve"
@@ -45,7 +45,22 @@ pipeline {
                  sh "terraform apply  -input=false tfplan"
              }
          }
+          stage('UAT Deployment Approval') {
+              steps {
+                script {
+                def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
+             }
+           }
+        }
 
+        stage('Deploy into UAT'){
+             steps {
+                 //sh "returnStatus: true, script: 'terraform workspace new dev'"
+                 //sh "terraform apply -auto-approve"
+                //  sh "terraform destroy -input=false -auto-approve"
+                 sh "terraform apply  -input=false tfplan"
+             }
+         }
         
     }
 }
