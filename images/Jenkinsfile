@@ -6,7 +6,7 @@ pipeline {
 
     environment {
         PATH = "${PATH}:${getTerraformPath()}:${getAnsiblePath()}}"
-        AMI_ID="stack-ami-${BUILD_NUMBER}",
+        AMI_ID="stack-ami-${BUILD_NUMBER}"
         VERSION = "1.0.${BUILD_NUMBER}"
     }
     stages{
