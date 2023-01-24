@@ -27,7 +27,7 @@ pipeline {
                 
                 aws configure set aws_access_key_id AKIAYNANKUJZIVEGQ75W
                 aws configure set aws_secret_access_key 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
-                 aws configure set region us-east-1
+                aws configure set region us-east-1
                 
                  packer build -force images/image.pkr.hcl 
                  """
