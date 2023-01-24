@@ -35,7 +35,7 @@ data "amazon-ami" "source_ami" {
     name = "${var.aws_source_ami}"
   }
   most_recent = true
-  owners      = ["577701061234","amazon"]
+  owners      = ["336528460023","amazon"]
   region      = "${var.aws_region}"
 }
 
