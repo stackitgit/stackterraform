@@ -51,9 +51,9 @@ data "amazon-ami" "source_ami" {
 
 
 source "amazon-ebs" "amazon_ebs" {
-  assume_role {
-    role_arn     = "arn:aws:iam::560089993749:role/Engineer"
-  }
+  # assume_role {
+  #   role_arn     = "arn:aws:iam::560089993749:role/Engineer"
+  # }
   ami_name                = "${var.ami_name}"
   ami_regions             = "${var.ami_regions}"
   ami_users               = "${var.aws_accounts}"
