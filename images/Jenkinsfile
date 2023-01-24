@@ -21,9 +21,10 @@ pipeline {
              steps {
                 //  withCredentials([string(credentialsId: 'MGT_ACC_AWS_ACCESS_KEY', variable: 'MGT_ACC_AWS_ACCESS_KEY'), string(credentialsId: 'MGT_ACCT_SECRET_KEY', variable: 'MGT_ACCT_SECRET_KEY')]){
                  sh """
+                 cd images
                  export PACKER_LOG=1
                  export PACKER_LOG_PATH=$WORKSPACE/packer.log
-                 /usr/bin/packer build -force images/image.pkr.hcl 
+                 /usr/bin/packer build -force image.pkr.hcl 
                  """
                  }
         //  }
