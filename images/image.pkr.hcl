@@ -1,7 +1,7 @@
-variable "region" {
-  type    = string
-  default = "us-east-1"
-}
+# variable "region" {
+#   type    = string
+#   default = "us-east-1"
+# }
 
 variable "aws_source_ami" {
   default = "amzn2-ami-hvm-2.0.20210326.0-x86_64-gp2"
@@ -11,18 +11,18 @@ variable "aws_instance_type" {
   default = "t2.small"
 }
 
-variable "ami_version" {
-  default = "1.0.6"
-}
+# variable "ami_version" {
+#   default = "1.0.6"
+# }
 
 variable "ami_name" {
-  default = "ami-stack-2.0"
+  default = "ami-stack-3.3"
 }
 
-variable "name" {
-  type    = string
-  default = ""
-}
+# variable "name" {
+#   type    = string
+#   default = ""
+# }
 
 variable "component" {
   default = "clixx"
@@ -31,12 +31,16 @@ variable "component" {
 
 variable "aws_accounts" {
   type = list(string)
-  default= ["577701061234"]
+  default= ["577701061234","560089993749"]
 }
 
 variable "ami_regions" {
   type = list(string)
   default =["us-east-1"]
+}
+
+variable "aws_region" {
+  default = "us-east-1"
 }
 
 data "amazon-ami" "source_ami" {
@@ -49,10 +53,6 @@ data "amazon-ami" "source_ami" {
 }
 
 
-
-variable "aws_region" {
-  default = "us-east-1"
-}
 
 
 # locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
