@@ -26,7 +26,7 @@ pipeline {
                  
                  echo 
                  aws configure set aws_access_key_id ${MGT_ACC_AWS_ACCESS_KEY}
-                 aws configure set aws_access_key_id ${MGT_ACC_SECRET_KEY}
+                 aws configure set aws_access_key_id ${MGT_ACCT_SECRET_KEY}
                 
                  packer build -force images/image.pkr.hcl
                  """
