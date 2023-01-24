@@ -5,7 +5,7 @@ pipeline {
 // }
 
     environment {
-        PATH = "${PATH}:${getTerraformPath()}:${getAnsiblePath()}:${getPackerPath()}"
+        PATH = "${PATH}:${getTerraformPath()}:${getAnsiblePath()}}"
     }
     stages{
 
@@ -44,6 +44,6 @@ pipeline {
         return AnsibleHome
     }
 
-def getPackerPath(){
-       def PackerHome= tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
-    }
+// def getPackerPath(){
+//        def PackerHome= tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
+//     }
