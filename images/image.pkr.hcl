@@ -16,7 +16,7 @@ variable "aws_instance_type" {
 # }
 
 variable "ami_name" {
-  default = "ami-stack-3"
+  default = "ami-stack-51"
 }
 
 # variable "name" {
