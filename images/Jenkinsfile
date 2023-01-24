@@ -19,14 +19,16 @@ pipeline {
 
          stage('Packer AMI Build'){
              steps {
-                 withCredentials([string(credentialsId: 'MGT_ACC_AWS_ACCESS_KEY', variable: 'MGT_ACC_AWS_ACCESS_KEY')]){
+                 withCredentials([string(credentialsId: 'MGT_ACC_AWS_ACCESS_KEY', variable: 'MGT_ACC_AWS_ACCESS_KEY'), string(credentialsId: 'MGT_ACC_SECRET_KEY', variable: 'MGT_ACC_SECRET_KEY')]){
                  sh """
                  export PACKER_LOG=1
                  export PACKER_LOG_PATH=$WORKSPACE/packer.log
                  
-                 echo ${MGT_ACC_AWS_ACCESS_KEY}
+                 echo 
+                 aws configure set aws_access_key_id ${MGT_ACC_AWS_ACCESS_KEY}
+                 aws configure set aws_access_key_id ${MGT_ACC_SECRET_KEY}
                 
-                //  packer build -force images/image.pkr.hcl
+                 packer build -force images/image.pkr.hcl
                  """
                  }
          }
