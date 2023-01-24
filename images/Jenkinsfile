@@ -21,19 +21,16 @@ pipeline {
 
          stage('Packer AMI Build'){
              steps {
-                 withCredentials([string(credentialsId: 'STACK_TERR_ACC_KEY', variable: 'STACK_TERR_ACC_KEY'), string(credentialsId: 'STACK_TERR_SEC_KEY', variable: 'STACK_TERR_SEC_KEY')]){
                  sh '''
                  cd images
                  sed -i "s/ami-stack-'[0-9]*$'/'${AMI_ID}'/" ./image.pkr.hcl 
                  export PACKER_LOG=1
                  export PACKER_LOG_PATH=$WORKSPACE/packer.log
                  /usr/bin/packer build -force image.pkr.hcl 
-                 aws configure set aws_access_key_id '${STACK_TERR_ACC_KEY}'
-                 aws configure set aws_secret_access_key '${STACK_TERR_SEC_KEY}'
-                 aws configure set region us-east-1
+                 
 
                  '''
-                 }
+               
          }
          }
 
