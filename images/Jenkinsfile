@@ -21,7 +21,7 @@ pipeline {
              steps {
                  sh """
                  cd images
-                 packer build -force image.pkr.hcl 
+                 packer -v
                  """
                  
          }
