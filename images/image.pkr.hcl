@@ -1,8 +1,3 @@
-# variable "region" {
-#   type    = string
-#   default = "us-east-1"
-# }
-
 variable "aws_source_ami" {
   default = "amzn2-ami-hvm-2.0.20210326.0-x86_64-gp2"
 }
@@ -11,18 +6,9 @@ variable "aws_instance_type" {
   default = "t2.small"
 }
 
-# variable "ami_version" {
-#   default = "1.0.6"
-# }
-
 variable "ami_name" {
   default = "ami-stack-51"
 }
-
-# variable "name" {
-#   type    = string
-#   default = ""
-# }
 
 variable "component" {
   default = "clixx"

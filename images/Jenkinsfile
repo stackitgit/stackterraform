@@ -44,10 +44,10 @@ pipeline {
         return tfHome
     }
 
- def getAnsiblePath(){
-        def AnsibleHome= tool name: 'Ansible', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
-        return AnsibleHome
-    }
+//  def getAnsiblePath(){
+//         def AnsibleHome= tool name: 'Ansible', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
+//         return AnsibleHome
+//     }
 
 // def getPackerPath(){
 //        def PackerHome= tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
