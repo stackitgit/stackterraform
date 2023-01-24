@@ -19,7 +19,7 @@ pipeline {
 
          stage('Packer AMI Build'){
              steps {
-                 withCredentials([file(credentialsId: 'MGT_ACC_AWS_ACCESS_KEY', variable: 'MGT_ACC_AWS_ACCESS_KEY')]){
+                 withCredentials([string(credentialsId: 'MGT_ACC_AWS_ACCESS_KEY', variable: 'MGT_ACC_AWS_ACCESS_KEY')]){
                  sh """
                  export PACKER_LOG=1
                  export PACKER_LOG_PATH=$WORKSPACE/packer.log
