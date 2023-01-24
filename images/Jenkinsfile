@@ -24,11 +24,11 @@ pipeline {
                  export PACKER_LOG=1
                  export PACKER_LOG_PATH=$WORKSPACE/packer.log
                  
-                 echo 
                  aws configure set aws_access_key_id ${MGT_ACC_AWS_ACCESS_KEY}
                  aws configure set aws_secret_access_key ${MGT_ACCT_SECRET_KEY}
+                 aws configure set region us-east-1
                 
-                 packer build -force images/image.pkr.hcl
+                 packer build -force images/image.pkr.hcl | sudo tee output.txt
                  """
                  }
          }
