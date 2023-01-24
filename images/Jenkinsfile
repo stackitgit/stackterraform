@@ -24,7 +24,7 @@ pipeline {
                 //  withCredentials([string(credentialsId: 'MGT_ACC_AWS_ACCESS_KEY', variable: 'MGT_ACC_AWS_ACCESS_KEY'), string(credentialsId: 'MGT_ACCT_SECRET_KEY', variable: 'MGT_ACCT_SECRET_KEY')]){
                  sh '''
                  cd images
-                 sed -i "s/ami-stack-'[0-9]*$'/'${AMI_ID}'/" $WORKSPACE/image.pkr.hcl 
+                 sed -i "s/ami-stack-'[0-9]*$'/'${AMI_ID}'/" ./image.pkr.hcl 
                  export PACKER_LOG=1
                  export PACKER_LOG_PATH=$WORKSPACE/packer.log
                  /usr/bin/packer build -force image.pkr.hcl 
