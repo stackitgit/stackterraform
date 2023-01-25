@@ -37,9 +37,7 @@ pipeline {
                  sh """
                  cd instances
                  terraform init -upgrade 
-                 """
-                               
-                             
+                 """                  
          }
          }
 
@@ -48,9 +46,16 @@ pipeline {
                  sh """
                  cd instances
                  terraform plan -out=tfplan -input=false
-                 """
-                              
-                             
+                 """                          
+         }
+         }
+
+        stage('Terraform Apply'){
+             steps {
+                 sh """
+                 cd instances
+                 terraform apply -out=tfplan -input=false
+                 """                          
          }
          }
 
