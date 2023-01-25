@@ -34,7 +34,10 @@ pipeline {
 
         stage('Terraform init'){
              steps {
-                 sh "terraform init"
+                 sh """
+                 cd instances
+                 terraform init
+                 """
                                
                              
          }
@@ -42,7 +45,10 @@ pipeline {
 
         stage('Terraform Plan'){
              steps {
-                 sh "terraform plan -out=tfplan -input=false"
+                 sh """
+                 cd instances
+                 terraform plan -out=tfplan -input=false
+                 """
                               
                              
          }
