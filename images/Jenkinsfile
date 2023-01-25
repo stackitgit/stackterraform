@@ -54,7 +54,7 @@ pipeline {
              steps {
                  sh """
                  cd instances
-                 terraform apply -input=false
+                 terraform apply -auto-approve
                  """                          
          }
          }
