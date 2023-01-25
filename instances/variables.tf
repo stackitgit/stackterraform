@@ -32,3 +32,7 @@ variable "subnets" {
 variable "PATH_TO_PUBLIC_KEY" {
   default = "ses_key.pub"
 }
+
+variable "ami_name" {
+  default = "ami-stack-51"
+}
