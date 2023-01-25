@@ -19,18 +19,18 @@ pipeline {
            }
         }
 
-        // stage('Packer AMI Build'){
-        //      steps {
-        //          sh '''
-        //          cd images
-        //          sed -i "s/ami-stack-'[0-9]*$'/'${AMI_ID}'/" ./image.pkr.hcl 
-        //          export PACKER_LOG=1
-        //          export PACKER_LOG_PATH=$WORKSPACE/packer.log
-        //          /usr/bin/packer build -force image.pkr.hcl 
-        //          '''
+        stage('Packer AMI Build'){
+             steps {
+                 sh '''
+                 cd images
+                 sed -i "s/ami-stack-'[0-9]*$'/'${AMI_ID}'/" ./image.pkr.hcl 
+                 export PACKER_LOG=1
+                 export PACKER_LOG_PATH=$WORKSPACE/packer.log
+                 /usr/bin/packer build -force image.pkr.hcl 
+                 '''
                
-        //  }
-        //  }
+         }
+         }
 
         stage('Terraform init'){
              steps {
