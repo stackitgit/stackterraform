@@ -30,5 +30,5 @@ variable "subnets" {
 }
 
 variable "PATH_TO_PUBLIC_KEY" {
-  default = "ses_key.pub"
+  default = "instances/ses_key.pub"
 }
