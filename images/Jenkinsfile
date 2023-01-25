@@ -54,7 +54,7 @@ pipeline {
              steps {
                  sh """
                  cd instances
-                 terraform apply -out=tfplan -input=false
+                 terraform apply -input=false
                  """                          
          }
          }
