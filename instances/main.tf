@@ -90,8 +90,17 @@ resource "aws_security_group" "sg_22_80" {
   }
 }
 
+data "aws_ami" "stack" {
+  owners     = ["self"]
+  name_regex = "^"
+
+  filter {
+    name   = "name"
+    values = ["ami-stack-51"]
+  }
+}
 resource "aws_instance" "web" {
-  ami                         = var.ami_name
+  ami                         = data.aws_ami.stack.id
   instance_type               = "t2.micro"
   subnet_id                   = var.subnets[0]
   vpc_security_group_ids      = [aws_security_group.sg_22_80.id]
