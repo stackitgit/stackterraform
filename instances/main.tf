@@ -99,7 +99,7 @@ data "aws_ami" "stack" {
     values = ["ami-stack-51"]
   }
 }
-resource "aws_instance" "web" {
+resource "aws_instance" "application_server" {
   ami                         = data.aws_ami.stack.id
   instance_type               = "t2.micro"
   subnet_id                   = var.subnets[0]
@@ -113,5 +113,5 @@ resource "aws_instance" "web" {
 }
 
 output "public_ip" {
-  value = aws_instance.web.public_ip
+  value = aws_instance.application_server.public_ip
 }
