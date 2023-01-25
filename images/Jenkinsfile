@@ -34,7 +34,7 @@ pipeline {
 
         stage('Terraform init'){
              steps {
-                 sh "erraform init"
+                 sh "terraform init"
                                
                              
          }
