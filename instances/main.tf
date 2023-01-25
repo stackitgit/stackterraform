@@ -52,7 +52,7 @@ provider "aws" {
 
 resource "aws_security_group" "sg_22_80" {
   name   = "sg_22"
-  vpc_id = aws_vpc.vpc_id
+  vpc_id = var.vpc_id
 
   # SSH access from the VPC
   ingress {
