@@ -34,19 +34,23 @@ pipeline {
 
         stage('Terraform init'){
              steps {
-                 sh '''
-                 cd instances
-                 terraform init               
-                 '''             
+                 sh "
+                cd instances
+                terraform init
+                 "
+                               
+                             
          }
          }
 
         stage('Terraform Plan'){
              steps {
-                 sh '''
+                 sh " 
                  cd instances
-                 terraform plan -out=tfplan -input=false              
-                 '''             
+                 terraform plan -out=tfplan -input=false 
+                 "
+                              
+                             
          }
          }
 
