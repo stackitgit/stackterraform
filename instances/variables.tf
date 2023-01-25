@@ -28,3 +28,7 @@ variable "subnets" {
     "subnet-0f809518c9e33b8d3",
    ]
 }
+
+variable "PATH_TO_PUBLIC_KEY" {
+  default = "ses_key.pub"
+}

@@ -50,6 +50,12 @@ provider "aws" {
 #   route_table_id = aws_route_table.rtb_public.id
 # }
 
+resource "aws_key_pair" "Stack_KP" {
+  key_name   = "stackkp"
+  public_key = file(var.PATH_TO_PUBLIC_KEY)
+}
+
+
 resource "aws_security_group" "sg_22_80" {
   name   = "sg_22"
   vpc_id = var.vpc_id
@@ -90,6 +96,7 @@ resource "aws_instance" "web" {
   subnet_id                   = var.subnets[0]
   vpc_security_group_ids      = [aws_security_group.sg_22_80.id]
   associate_public_ip_address = true
+  key_name = aws_key_pair.Stack_KP.key_name
 
   tags = {
     Name = "Test_Instance"
