@@ -12,34 +12,34 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_vpc" "vpc" {
-  cidr_block           = var.cidr_vpc
-  enable_dns_support   = true
-  enable_dns_hostnames = true
-}
+# resource "aws_vpc" "vpc" {
+#   cidr_block           = var.cidr_vpc
+#   enable_dns_support   = true
+#   enable_dns_hostnames = true
+# }
 
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.vpc.id
-}
+# resource "aws_internet_gateway" "igw" {
+#   vpc_id = aws_vpc.vpc.id
+# }
 
-resource "aws_subnet" "subnet_public" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = var.cidr_subnet
-}
+# resource "aws_subnet" "subnet_public" {
+#   vpc_id     = aws_vpc.vpc.id
+#   cidr_block = var.cidr_subnet
+# }
 
-resource "aws_route_table" "rtb_public" {
-  vpc_id = aws_vpc.vpc.id
+# resource "aws_route_table" "rtb_public" {
+#   vpc_id = aws_vpc.vpc.id
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw.id
-  }
-}
+#   route {
+#     cidr_block = "0.0.0.0/0"
+#     gateway_id = aws_internet_gateway.igw.id
+#   }
+# }
 
-resource "aws_route_table_association" "rta_subnet_public" {
-  subnet_id      = aws_subnet.subnet_public.id
-  route_table_id = aws_route_table.rtb_public.id
-}
+# resource "aws_route_table_association" "rta_subnet_public" {
+#   subnet_id      = aws_subnet.subnet_public.id
+#   route_table_id = aws_route_table.rtb_public.id
+# }
 
 resource "aws_security_group" "sg_22_80" {
   name   = "sg_22"
@@ -76,14 +76,14 @@ resource "aws_security_group" "sg_22_80" {
 }
 
 resource "aws_instance" "web" {
-  ami                         = "ami-YOUR-AMI-ID"
+  ami                         = "ami-stack-51"
   instance_type               = "t2.micro"
-  subnet_id                   = aws_subnet.subnet_public.id
+  subnet_id                   = aws_subnet.subnet_public[0].id
   vpc_security_group_ids      = [aws_security_group.sg_22_80.id]
   associate_public_ip_address = true
 
   tags = {
-    Name = "Learn-Packer"
+    Name = "Test_Instance"
   }
 }
 

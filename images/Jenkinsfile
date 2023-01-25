@@ -19,7 +19,7 @@ pipeline {
            }
         }
 
-         stage('Packer AMI Build'){
+        stage('Packer AMI Build'){
              steps {
                  sh '''
                  cd images
@@ -27,12 +27,29 @@ pipeline {
                  export PACKER_LOG=1
                  export PACKER_LOG_PATH=$WORKSPACE/packer.log
                  /usr/bin/packer build -force image.pkr.hcl 
-                 
-
                  '''
                
          }
          }
+
+        stage('Terraform init'){
+             steps {
+                 sh '''
+                 cd instances
+                 terraform init               
+                 '''             
+         }
+         }
+
+        stage('Terraform Plan'){
+             steps {
+                 sh '''
+                 cd instances
+                 terraform plan -out=tfplan -input=false              
+                 '''             
+         }
+         }
+
 
        
         
