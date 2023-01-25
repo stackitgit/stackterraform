@@ -17,10 +17,10 @@ resource "aws_inspector_assessment_template" "stack_hardening_rules" {
   duration   = 3600
 
   rules_package_arns = [
-    "arn:aws:inspector:us-east-1:758058086616:rulespackage/0-9hgA516p",
-    "arn:aws:inspector:us-east-1:758058086616:rulespackage/0-H5hpSawc",
-    "arn:aws:inspector:us-east-1:758058086616:rulespackage/0-JJOtZiqQ",
-    "arn:aws:inspector:us-east-1:758058086616:rulespackage/0-vg5GGHSD",
+    "arn:aws:inspector:us-east-1:316112463485:rulespackage/0-gEjTy7T7",
+    "arn:aws:inspector:us-east-1:316112463485:rulespackage/0-rExsr2X8",
+    "arn:aws:inspector:us-east-1:316112463485:rulespackage/0-PmNV0Tcd",
+    "arn:aws:inspector:us-east-1:316112463485:rulespackage/0-R01qwB5Q",
   ]
 }
 
