@@ -87,7 +87,7 @@ resource "aws_security_group" "sg_22_80" {
 resource "aws_instance" "web" {
   ami                         = "ami-stack-51"
   instance_type               = "t2.micro"
-  subnet_id                   = var.subnet_public[0].id
+  subnet_id                   = var.subnets[0].id
   vpc_security_group_ids      = [aws_security_group.sg_22_80.id]
   associate_public_ip_address = true
 
