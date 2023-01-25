@@ -1,6 +1,6 @@
 resource "aws_inspector_resource_group" "stack_res" {
   tags = {
-    Name = var.servername
+    Name = "Test_Instance"
     Env  = "dev"
   }
   depends_on = [aws_instance.application_server]
