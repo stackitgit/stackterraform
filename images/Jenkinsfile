@@ -50,7 +50,7 @@ pipeline {
          }
          }
 
-        stage('Terraform Apply'){
+        stage('Build Instance and Vulnerability Scan'){
              steps {
                  sh """
                  cd instances
