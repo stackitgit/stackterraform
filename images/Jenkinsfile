@@ -19,21 +19,23 @@ pipeline {
            }
         }
 
-        stage('Packer AMI Build'){
-             steps {
-                 sh '''
-                 cd images
-                 sed -i "s/ami-stack-'[0-9]*$'/'${AMI_ID}'/" ./image.pkr.hcl 
-                 export PACKER_LOG=1
-                 export PACKER_LOG_PATH=$WORKSPACE/packer.log
-                 /usr/bin/packer build -force image.pkr.hcl 
-                 '''
+        // stage('Packer AMI Build'){
+        //      steps {
+                
+        //          sh '''
+        //          cd images
+        //          sed -i "s/ami-stack-'[0-9]*$'/'${AMI_ID}'/" ./image.pkr.hcl 
+        //          export PACKER_LOG=1
+        //          export PACKER_LOG_PATH=$WORKSPACE/packer.log
+        //          /usr/bin/packer build -force image.pkr.hcl 
+        //          '''
                
-         }
-         }
+        //  }
+        //  }
 
         stage('Terraform init'){
              steps {
+                 slackSend channel: '#stackjenkins', color: 'Red', message: '"STARTED job: \'${env.JOB_NAME} [${env.BUILD_NUMBER}]\' (${env.BUILD_URL})"', teamDomain: 'stackitsolutions', tokenCredentialId: 'Slack_API_Token'
                  sh """
                  cd instances
                  terraform init -upgrade 
@@ -41,32 +43,32 @@ pipeline {
          }
          }
 
-        stage('Terraform Plan'){
-             steps {
-                 sh """
-                 cd instances
-                 terraform plan -out=tfplan -input=false
-                 """                          
-         }
-         }
+        // stage('Terraform Plan'){
+        //      steps {
+        //          sh """
+        //          cd instances
+        //          terraform plan -out=tfplan -input=false
+        //          """                          
+        //  }
+        //  }
 
-        stage('Build Instance and Vulnerability Scan'){
-             steps {
-                 sh """
-                 cd instances
-                 terraform apply -auto-approve
-                 """                          
-         }
-         }
+        // stage('Build Instance and Vulnerability Scan'){
+        //      steps {
+        //          sh """
+        //          cd instances
+        //          terraform apply -auto-approve
+        //          """                          
+        //  }
+        //  }
 
-          stage('Build Vulnerability Report'){
-             steps {
-                 sh """
-                 cd instances
-                 aws inspector start-assessment-run --assessment-run-name Hardeningrun_'${VERSION}' --assessment-template-arn "arn:aws:inspector:us-east-1:336528460023:target/0-icADPfPR/template/0-vfjqO1E7" --region us-east-1
-                 """                          
-         }
-         }
+        //   stage('Build Vulnerability Report'){
+        //      steps {
+        //          sh """
+        //          cd instances
+        //          aws inspector start-assessment-run --assessment-run-name Hardeningrun_'${VERSION}' --assessment-template-arn "arn:aws:inspector:us-east-1:336528460023:target/0-icADPfPR/template/0-vfjqO1E7" --region us-east-1
+        //          """                          
+        //  }
+        //  }
 
 
        
