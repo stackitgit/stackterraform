@@ -35,8 +35,7 @@ pipeline {
 
         stage('Terraform init'){
              steps {
-                 slackSend channel: '#stackjenkins', color: 'Red', message: '"STARTED job: \'${env.JOB_NAME} [${env.BUILD_NUMBER}]\' (${env.BUILD_URL})"', teamDomain: 'stackitsolutions', tokenCredentialId: 'Slack_API_Token'
-                 sh """
+                 slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
                  cd instances
                  terraform init -upgrade 
                  """                  
