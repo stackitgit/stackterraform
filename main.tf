@@ -394,3 +394,16 @@ output "ip" {
 output "ip" {
   value = "${aws_autoscaling_group.clixx_asg.public_ips}"
 }*/
+
+resource "aws_instance" "server" {
+  for_each = var.instance_configs
+
+  ami           = each.value.ami
+  instance_type = each.value.instance_type
+
+  tags = {
+    Name = each.value.name_tag
+  }
+}
+
+
